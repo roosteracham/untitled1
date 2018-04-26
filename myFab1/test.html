@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+    <script src="scripts/fabric.js"></script>
+</head>
+<body>
+<canvas id="c"  width="800" height="600"></canvas>
+<script>
+    var canvas = new fabric.Canvas('c');
+
+    fabric.NamedImage = fabric.util.createClass(fabric.Image, {
+
+        type: 'named-image',
+
+        initialize: function(element, options) {
+            this.callSuper('initialize', element, options);
+            options && this.set('name', options.name);
+        },
+
+        toObject: function() {
+            return fabric.util.object.extend(this.callSuper('toObject'), { name: this.name });
+        }
+    });
+
+    fabric.NamedImage.fromObject = function(object, callback) {
+        fabric.util.loadImage(object.src, function(img) {
+            callback && callback(new fabric.NamedImage(img, object));
+        });
+    };
+
+    fabric.NamedImage.async = true;
+
+    // create image element
+    var img = document.createElement('img');
+    img.src ='test.jpg';
+
+    //创建命名图像的实例
+    var tagName='mini';
+    var namedImg = new fabric.NamedImage(img,{name:tagName});
+
+    //将其添加到画布
+    canvas.add(namedImg);
+
+    //保存json
+    var json = JSON.stringify(canvas);
+
+    console.log(canvas.toDatalessJSON());
+    console.log(json);
+
+
+    //清除画布
+    canvas.clear();
+
+
+    //并从同一个json加载所有内容
+    canvas.loadFromJSON(json, function () {
+        //确保在底部渲染canvas b $ b
+        canvas.renderAll();
+        console.log(canvas.item(0).name);
+    });
+
+
+
+        //并检查对象的“名称”是否保留
+
+
+</script>
+</body>
+</html>

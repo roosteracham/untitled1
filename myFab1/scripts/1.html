@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <!-- 引入 ECharts 文件 -->
+
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap-datetimepicker.css">
+    <script src="./jquery-3.3.1.min.js"></script>
+    <script src="./bootstrap-datetimepicker.js"></script>
+    <script src="./bootstrap-datetimepicker.zh-CN.js"></script>
+</head>
+
+<body>
+<div class="input-append date form_datetime">
+    <input size="16" type="text" id = "time" value="" readonly>
+    <span class="add-on"><i class="icon-th"></i></span>
+</div>
+
+<script type="text/javascript">
+    $('#time').datetimepicker({
+        format: 'yyyy-mm-dd hh:ii',
+        minuteStep: 5,
+        showInputs: false,
+        template: 'modal',
+        modalBackdrop: true,
+        todayBtn: true,
+        showMeridian: false,
+        autoclose: true,
+        startView: 1,
+        language: 'us'
+    });
+</script>
+</body>
+</html>

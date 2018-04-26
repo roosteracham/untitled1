@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./css/config.css">
+  <script type="text/javascript" src="./js/jquery.min.js"></script>
+  <script type="text/javascript" src="./js/bootstrap.min.js"></script>
+    <meta charset="UTF-8">
+  <title>登陆</title>
+<!-- </head>
+<body>
+<div class="">
+  <form class="form-horizontal pos" action="/login" method="POST" role="form" id="form1">
+  <div class="form-group">
+    <label for="firstname" class="col-sm-2 control-label">用户名：</label>
+    <div class="col-sm-2">
+      <input type="text" class="form-control" id="name" name = "name" 
+      placeholder="请输入名字">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="lastname" class="col-sm-2 control-label">密　码： </label>
+    <div class="col-sm-2">
+      <input type="text" class="form-control" id="password" name="password"
+      placeholder="请输入密码">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+		<a href="/register">没有账号？立即注册</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <button type="submit" class="btn btn-primary">登录</button>
+    </div>
+  </div>
+</form>
+</div>
+</body> -->
+<body>
+    <div id="hidebg"></div>
+    <div class="header"></div>
+    <div class="main" style="background:url(https://csdnimg.cn/passport/login-bg.png)">
+      <div class="container container-custom">
+        <div class="row wrap-login">
+          <div class="login-banner col-sm-6 col-md-7 col-lg-7 hidden-xs">
+              <a href="#" target="_blank">
+              <img src="./images/njdxbdl.png" class="img-responsive">
+              </a>
+          </div>
+          <div class="login-user col-xs-12 col-sm-6 col-md-5 col-lg-5">
+            <div class="login-part">
+              <h3>帐号登录</h3>
+              <div class="user-info">
+                <div class="user-pass">
+
+                  <form id="fm1" action="/login" method="post">
+                     <input type="hidden">
+                    <input id="name" name="name" tabindex="1" placeholder="用户名" class="user-name" type="text" value="">
+                    <div class="mobile-auth" style="display:none"><span>该手机已绑定账号，可使用  </span><a href="" id="mloginurl" class="mobile-btn">手机验证码登录</a></div>
+                    <input id="password" name="password" tabindex="2" placeholder="输入密码" class="pass-word" type="password" value="" autocomplete="off">
+              <div class="error-mess" style="display:none;">
+                <span class="error-icon"></span><span ></span>
+              </div>
+                    <div class="row forget-password">
+                      <a name="rememberMe" href = "/register" value="true"class="auto-login" tabindex="4"><span class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                          <label for="rememberMe">没有账号，立即注册</label>
+                        </span></a>
+                        <!-- <span class="col-xs-6 col-sm-6 col-md-6 col-lg-6 forget tracking-ad" data-mod="popu_26">
+                          <a href="https://passport.csdn.net/account/fpwd?action=forgotpassword&amp;service=https%3A%2F%2Fedu.csdn.net%2Fcourse%2Fdetail%2F2671" tabindex="5" target="_blank">忘记密码</a>
+                        </span> -->
+                    </div>
+                    <!-- 该参数可以理解成每个需要登录的用户都有一个流水号。只有有了webflow发放的有效的流水号，用户才可以说明是已经进入了webflow流程。否则，没有流水号的情况下，webflow会认为用户还没有进入webflow流程，从而会重新进入一次webflow流程，从而会重新出现登录界面。 -->
+          <button class="logging" value="登 录" tabindex="6" type="submit">登 录</button>
+
+                  </form>
+                </div>
+              </div>
+              <div class="line"></div>
+              <div class="third-part tracking-ad" data-mod="popu_27">                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+
+<!--kucik deal report   位于公共jquery后面--><!-- 
+<script type="text/javascript">
+
+
+    var _kuickDeal = _kuickDeal || [];
+    window._kuickDeal = _kuickDeal;
+    var onKDReadyFinish=function(){};
+    (function(){
+        var _dealProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+        var _sdkURL = _dealProtocol + 'deal.kuick.cn/sdk/v1/';
+
+        _kuickDeal.push(['SDK_URL', _sdkURL]);
+        _kuickDeal.push(['KUICK_API_URL', _dealProtocol + 'api.kuick.cn/api/v1.0']);
+        _kuickDeal.push(['DEAL_API_URL', _dealProtocol + 'deal-api.kuick.cn/api/v1.0']);
+        _kuickDeal.push(['APP_KEY',CFG.TRACK_KUICK_ID]);
+        _kuickDeal.push(['LOG_LEVEL', '3']);
+
+        (function() {
+            if(typeof define === 'function' && define.amd) {
+                require([_sdkURL + 'kuickdeal-pc.min.js'], function(kd){
+                    window.kuickDeal = kd;
+                });
+            } else {
+                var deal = document.createElement('script');
+                deal.type='text/javascript';
+                deal.async = false;
+                deal.src = _sdkURL + 'kuickdeal-pc.min.js';
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(deal, s);
+            }
+        })();
+    })();
+    var onKDReady = function(){
+        $("[data-kuick]").on("click",function(){
+            var data=$(this).data("kuick");
+            console.log("kuick track:",data);
+            kuickDeal.onBehaviour(data.act, data.desc);
+        })
+
+        $("body").trigger("onKDReady");
+        onKDReadyFinish();
+
+    }
+
+    if (typeof kuickDeal == "undefined"){
+        if(document.addEventListener){
+            document.addEventListener('KDReady', onKDReady, false);
+        } else if (document.attachEvent){
+            document.attachEvent('KDReady', onKDReady);
+            document.attachEvent('onKDReady', onKDReady);
+        }
+    } else {
+        kuickDeal.ready(onKDReady);
+    }
+</script> -->
+  
+<div style="position:fixed; top:0; left:0; overflow:hidden;"><input style="position:absolute; left:-300px;" type="text" value="" id="focus_retriever" readonly="true"></div></body>
+</html>

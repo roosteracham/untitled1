@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap-datetimepicker.css">
+    <link rel="stylesheet" type="text/css" href="css/layout.css">
+    <script type="text/javascript" src="./js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="./js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="./js/bootstrap-datetimepicker.js"></script>
+    <script type="text/javascript" src="./js/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script src="./js/echarts.min.js"></script>
+    <script src="js/fabric.js"></script>
+    <meta charset="UTF-8">
+    <title>run</title>
+
+</head>
+<body>
+<div style="display:inline-block;vertical-align:top">
+    <p>
+        <button id="importProject"  class="">导入工程</button><br><br>
+        <button id="importConfiguration"  class="">导入画面</button><br><br>
+        <button id="ungroup" class="">取消组合</button><br>
+    </p>
+    <p id="confChange">
+    </p>
+</div>
+
+
+<canvas id="c" width=850  height=610 ></canvas>
+
+<div class="tagRead" style="display: inline-block;">
+    <div class="tag" >
+        <br>
+        <code>位号信息:</code>
+        <p>
+            <label><span>位号:</span> <input type="text" id="tagId" ></label>
+        </p>
+        <p>
+            <label><span>名称:</span> <input type="text" id="tagName" ></label>
+        </p>
+        <p>
+            <label><span>上限:</span> <input type="text" id="tagUplimit" ></label>
+        </p>
+        <p>
+            <label><span>下限:</span> <input type="text" id="tagDownlimit" ></label>
+        </p>
+
+        <code>趋势:</code>
+        <p>
+            <label><span>开始时间:</span> <input type="text" id="beginTime"></label>
+        </p>
+        <p>
+            <label><span>结束时间:</span> <input type="text" id="endTime"></label>
+        </p>
+        <button id="showHistory" data-toggle="modal" data-target="#myModal"
+                style="background-color: beige; float: right; padding-right: 5px">显示趋势</button>
+
+        <div style="font-size: 0.8em"></div><br>
+        <code style="float: left">实时显示:</code>
+        <p>
+            <label><span>示值:</span> <input type="text" id="tagValue" readonly></label>
+        </p>
+        <p>
+        <div id="showtime" style="font-size: 0.8em"></div>
+        </p>
+        <p>
+        </p>
+    </div>
+
+    <div class="dateTag" id="table">
+        <code>实时数据</code>
+        <!--<button class="btn btn-primary" id="realtimeStart">开始</button>-->
+        <!--<button class="btn btn-danger"  id="realtimeStop">停止</button>-->
+    </div>
+    <a href="configure.html"><button style="background-color: beige">返回组态设计界面</button></a>
+
+</div>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    历史数据显示
+                </h4>
+            </div>
+            <div class="modal-body">
+                <canvas id="myChart" width="400" height="400"></canvas>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button><!--
+                <button type="button" class="btn btn-primary">
+                    提交更改
+                </button>-->
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<script type="text/javascript">
+    $('#myModal').on('show.bs.modal', function () {
+
+    var tagId = document.getElementById("tagId").value;
+    var beginTime = document.getElementById("beginTime").value;
+    var endTime = document.getElementById("endTime").value;
+    var str = {"type" : 0, "tagId" : tagId, "beginTime" : beginTime, "endTime" : endTime};
+    //alert(JSON.stringify(str));
+    var ws = new WebSocket("ws://localhost:8181");
+    ws.onopen = function () {
+        console.log("连接成功。。");
+        ws.send(JSON.stringify(str));
+    };
+
+    ws.onerror = function () {
+        console.log("连接出错。。");
+    };
+
+    ws.onmessage = function (evt) {
+        //var stocksData = JSON.parse(evt.data);
+        var tagId = document.getElementById("tagId").value;
+        var data = JSON.parse(evt.data);
+        console.log("通信。。" + data);/*
+        var symbol = evt.data.symbol;
+        var values = evt.data.values;*/
+        var symbol = [];
+        var values = [];
+        var i = 0;
+        for (var key in data) {
+            symbol[i] = key.substring(11, 16);
+            values[i++] = data[key];
+        }
+        ws.close();
+        //alert(symbol + " " +  values);
+        var myChart = echarts.init(document.getElementById('myChart'));
+        var option = {
+            title: {
+                text: '历史数据'
+            },
+            tooltip: {},
+            legend: {
+                data:[tagId]
+            },
+            xAxis: {
+                data: symbol
+            },
+            yAxis: {},
+            series: [{
+                name: tagId,
+                type: 'line',
+                data: values
+            }]
+        };
+        myChart.setOption(option);
+    };
+
+    ws.onclose = function () {
+        console.log("通讯关闭。。");
+    }
+
+});
+$('#beginTime, #endTime').datetimepicker({
+    format: 'yyyy-mm-dd hh:ii',
+    minuteStep: 5,
+    showInputs: false,
+    template: 'modal',
+    modalBackdrop: true,
+    todayBtn: true,
+    showMeridian: false,
+    autoclose: true,
+    startView: 1,
+    language: 'us',
+    pickerPosition: 'bottom-left'
+});
+</script>
+<script src="js/configure.js"></script>
+<script src="js/run.js"></script>
+</body>
+
+</html>

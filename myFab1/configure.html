@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>group</title>
+    <script src="scripts/fabric.js"></script>
+    <script src="scripts/configure.js"></script>
+    <!--<script src="scripts/jquery-3.3.1.min.js"></script>-->
+    <!--<script src="scripts/jquery.knob.js"></script>-->
+    <!--<script src="scripts/jquery.mousewheel.min.js"></script>-->
+    <link   rel="stylesheet"    type="text/css" href="css/layout.css">
+</head>
+<body>
+
+<div style="display: inline-block">
+    <p>
+    <code>图元</code><br>
+        <button id="addmore" class="btn-info">快速新建</button><br>
+        <button id="addLine2" class="btn-info">新增直线</button><br>
+        <button id="addRect" class="btn-info">新增矩形</button><br>
+        <button id="Triangle" class="btn-info">新增三角</button><br>
+        <button id="addCircle" class="btn-info">新增圆形</button><br>
+        <button id="addCircle2" class="btn-info">新增圆环</button><br>
+        <button id="addEllipse" class="btn-info">新增椭圆</button><br>
+        <button id="addText" class="btn-info">新建文本</button><br>
+        <button id="dateDisplay" class="btn-info">数据显示</button><br><br>
+
+        <code>载入</code><br>
+        <button id="addImg" class="btn-info">载入图片</button><br>
+        <button id="addSVG" class="btn-info">载入SVG</button><br>
+        <button id="addLib" class="btn-info">载入图库</button><br><br>
+
+        <code>操作</code><br>
+        <button id="multiselect" class="btn-info">全部选中</button><br>
+        <button id="discard" class="btn-info">取消选中</button><br>
+        <button id="group" class="btn-info">组合对象</button><br>
+        <button id="ungroup" class="btn-info">取消组合</button><br>
+        <button id="copy" class="btn-info">复制对象</button><br>
+        <button id="paste" class="btn-info">粘贴对象</button><br>
+        <button id="deleteObject" class="btn-info">删除对象</button><br>
+        <button id="toBottom"  class="btn-info">对象置底</button><br>
+        <button id="toTop"  class="btn-info">对象置顶</button><br>
+        <button id="clearAll"  class="btn-info">清空页面</button><br>
+
+        <!--<button id="test1"  class="btn-info">test1</button><br>-->
+    </p>
+</div>
+
+<canvas id="c" width=720  height=610 ></canvas>
+
+
+<div class="controls" >
+    <!--<p id="setControlVisible">-->
+        <!--<label>-->
+            <!--<input type="checkbox" title="top-left control" name="tl" checked>-->
+        <!--</label>-->
+        <!--<label>-->
+            <!--<input type="checkbox" title="middle-left control" name="ml" checked>-->
+        <!--</label>-->
+        <!--<label>-->
+            <!--<input type="checkbox" title="bottom-left control" name="bl" checked>-->
+        <!--</label>-->
+        <!--<label>-->
+            <!--<input type="checkbox" title="middle-bottom control" name="mb" checked>-->
+        <!--</label>-->
+        <!--<label>-->
+            <!--<input type="checkbox" title="bottom-right control" name="br" checked>-->
+        <!--</label>-->
+        <!--<label>-->
+            <!--<input type="checkbox" title="middle-right control" name="mr" checked>-->
+        <!--</label>-->
+        <!--<label>-->
+            <!--<input type="checkbox" title="top-right control" name="tr" checked>-->
+        <!--</label>-->
+        <!--<label>-->
+            <!--<input type="checkbox" title="middle-top control" name="mt" checked>-->
+        <!--</label>-->
+        <!--<label>-->
+            <!--<input type="checkbox" title="middle-top-rotate control" name="mtr" checked>-->
+        <!--</label>-->
+    <!--</p>-->
+    <br>
+    <code>控制点选项设置:</code>
+    <p>
+        <label>
+            <input type="checkbox" id="hasControls" checked >
+            <code>控制点可见</code>
+        </label>
+    </p>
+    <p>
+        <label>
+            <input type="checkbox" id="hasRotatingPoint" checked>
+            <code>旋转点可见</code>
+        </label>
+    </p>
+    <p>
+        <label>
+            <input type="checkbox" id="transparentCorners" >
+            <code>控制点内空</code>
+        </label>
+    </p>
+    <!--对象可见 慎用!-->
+    <!--<p>-->
+        <!--<label>-->
+            <!--<input type="checkbox" id="visible" checked>-->
+            <!--<code>对象可见</code>-->
+        <!--</label>-->
+    <!--</p>-->
+
+    <!--对象只读,慎用!-->
+    <!--<p>-->
+        <!--<label>-->
+            <!--<input type="checkbox" id="selectable" checked>-->
+            <!--<code>对象可选</code>-->
+        <!--</label>-->
+    <!--</p>-->
+    <p>
+        <label>
+            <input type="checkbox" id="evented" checked>
+            <code>事件目标</code>
+        </label>
+    </p>
+
+    <p>
+        <label>
+            <input type="checkbox" id="centeredScaling">
+            <code>中心缩放</code>
+        </label>
+    </p>
+    <!--<p>-->
+        <!--<label>-->
+            <!--<input type="checkbox" id="centeredRotation">-->
+            <!--<code>中心旋转</code>-->
+        <!--</label>-->
+    <!--</p>-->
+    <p>
+        <label>
+            <code>控制点形状:方</code>
+            <input type="radio" name="cornerStyle" value="rect" id="cornerStyle1" checked>
+            <code>圆</code>
+            <input type="radio" name="cornerStyle"  value="circle" id="cornerStyle2">
+        </label>
+    </p>
+
+    <p>
+        <label>
+            <code>控件边框颜色</code>
+            <input type="color" id="borderColor" style="display: block">
+        </label>
+    </p>
+    <p>
+        <label>
+            <code>控制点颜色</code>
+            <input type="color" id="cornerColor" style="display: block">
+        </label>
+    </p>
+    <p>
+        <label>
+            <code>对象颜色</code>
+            <input type="color" id="fill" style="display: block">
+        </label>
+    </p>
+
+    <br>
+
+    <code>位置形状快速设置:</code>
+    <p>
+        <label><span>旋转对象:</span> <input type="range" id="angle-control" value="0" min="0" max="360" ></label>
+    </p>
+    <p>
+        <label><span>缩放对象:</span> <input type="range" id="scale-control" value="1" min="0.1" max="3" step="0.1"></label>
+    </p>
+    <p>
+        <label><span>左右平移:</span> <input type="range" id="left-control" value="150" min="0" max="400"></label>
+    </p>
+    <p>
+        <label><span>上下平移:</span> <input type="range" id="top-control" value="150" min="0" max="400"></label>
+    </p>
+    <p>
+        <label><span>旋转X轴:</span> <input type="range" id="skewX-control" value="0" min="0" max="80" step="1"></label>
+    </p>
+    <p>
+        <label><span>旋转Y轴:</span> <input type="range" id="skewY-control" value="0" min="0" max="80" step="1"></label>
+    </p>
+    <br>
+</div>
+
+<div class="tag" >
+    <br>
+    <code>位号设置:</code>
+    <p>
+        <label><span>位号:</span> <input type="text" id="tagId"></label>
+    </p>
+    <p>
+        <label><span>名称:</span> <input type="text" id="tagName"></label>
+    </p>
+    <p>
+        <label><span>上限:</span> <input type="text" id="tagUplimit"></label>
+    </p>
+    <p>
+        <label><span>下限:</span> <input type="text" id="tagDownlimit"></label>
+    </p>
+
+    <code>导出设置:</code>
+    <p>
+        <label><span>工程:</span> <input type="text" id="outProjectName"></label>
+    </p>
+    <p>
+        <label><span>编号:</span> <input type="number" id="outId" min="1" max="99999999"></label>
+    </p>
+    <p>
+        <label><span>命名:</span> <input type="text" id="outName"></label>
+    </p>
+    <p>
+        <button id="exportToLib">生成本地图库</button><button id="exportToConf">导出组态页面</button>
+    </p>
+    <p>
+        <a href="run.html"><button style="background-color: beige">进入组态运行界面</button></a>
+    </p>
+
+</div>
+
+
+<script id="main" src="scripts/group.js"></script>
+
+
+<!--<script>-->
+    <!--(function() {-->
+        <!--fabric.util.addListener(fabric.window, 'load', function() {-->
+            <!--var canvas = this.__canvas || this.canvas,-->
+                    <!--canvases = this.__canvases || this.canvases;-->
+
+            <!--canvas && canvas.calcOffset && canvas.calcOffset();-->
+
+            <!--if (canvases && canvases.length) {-->
+                <!--for (var i = 0, len = canvases.length; i < len; i++) {-->
+                    <!--canvases[i].calcOffset();-->
+                <!--}-->
+            <!--}-->
+        <!--});-->
+    <!--})();-->
+<!--</script>-->
+
+</body>
+</html>
