@@ -597,7 +597,7 @@ exportToLib.onclick= function () {
         let address=$('outProjectName').value + $('outId').value;
         //address=outProject;
         var group=JSON.stringify(outProject);
-        console.log(outProject,address,group);//obj,var,str
+        //console.log(outProject,address,group);//obj,var,str
         //localStorage.setItem(address,outProject);
         localStorage.setItem(address,group);
     });
@@ -607,7 +607,7 @@ addLib.onclick= function () {
     var address=$('outProjectName').value + $('outId').value;
     var lib=localStorage.getItem(address);//字符串
     var libObj = JSON.parse(lib); //对象
-    console.log(address,lib,libObj);
+    //console.log(address,lib,libObj);
 
     //
     //canvas.discardActiveObject();
@@ -650,7 +650,7 @@ addLib.onclick= function () {
 //导出组态页面-序列化
 exportToConf.onclick= function () {
     //console.log(canvas.toDatalessJSON());
-    console.log(JSON.stringify(canvas.toJSON()));
+    //console.log(JSON.stringify(canvas.toJSON()));
     //console.log(JSON.stringify(canvas.toObject()));
     let json=JSON.stringify(canvas.toJSON());
     //console.log(canvas.item(0));

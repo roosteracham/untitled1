@@ -72,7 +72,7 @@ app.post('/export', function(req, res){
 
 app.post('/import', function(req, res){
     var p = req.body.projectName;
-    console.log(p);
+    //console.log(p);
     //读文件，文件内容返回
     var data = getData(p).toString();
     var str = {};
@@ -132,12 +132,12 @@ function isFileExists(id, data) {
 	    if (err) {
 	        throw err;
         }
-        console.log("appendData.");
+        //console.log("appendData.");
     });
 }
 
 function exroet(data) {
-    createPath();
+    //createPath();
     var projectName = data.projectName;
     isFileExists(projectName, data);
 }

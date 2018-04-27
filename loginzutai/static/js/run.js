@@ -43,9 +43,18 @@ function getData(p) {
 //导入工程,需要先输入工程号,再选择需要导入画面
 importProjedt.onclick= function a() {
     let projectName=prompt("请输入工程名:", "Pro1");
-    //localStorage.clear();
+    removeEle();
+    localStorage.clear();
     getData(projectName);
 };
+function removeEle() {
+    var confChange = $('confChange');
+    var b = confChange.childNodes;
+    for (let i = 0; i < b.length; i++) {
+        confChange.removeChild(b[i]);
+    }
+    $('confChange').innerHTML = "";
+}
 function connectToServer(projectName) {
     if(projectName!=""&&projectName!=null){
         //请求工程名下信息
@@ -87,14 +96,14 @@ function connectToServer(projectName) {
         }
         stocks0 = stocks0 + `"${KV[KV.length-1].key}":${KV[KV.length-1].value}}`;
         var stocks = JSON.parse(stocks0);
-        console.log(stockrequest,stock_request,KV,stocks);
+        //console.log(stockrequest,stock_request,KV,stocks);
         var isClose = false;
         //进入updataUI的参数已准备就绪
         ws.onopen = function (e) {
-            console.log('Connection to server opened');
+            //console.log('Connection to server opened');
             isClose = false;
             ws.send(JSON.stringify(stock_request));
-            console.log("sened a mesg");
+            //console.log("sened a mesg");
         };
         //// UI update function  //通过设置CSS来形成颜色改变的动画
         //var changeStockEntry = function (symbol, originalValue, newValue) {
@@ -112,7 +121,7 @@ function connectToServer(projectName) {
         // WebSocket message handler
         ws.onmessage = function (e) {
             var stocksData = JSON.parse(e.data); //将服务器返回的字符串序列化为对象
-            console.log(stocksData);
+            //console.log(stocksData);
             for (var symbol in stocksData) {
                 if (stocksData.hasOwnProperty(symbol)) {
                     //changeStockEntry(symbol, stocks[symbol], stocksData[symbol]);
@@ -120,11 +129,11 @@ function connectToServer(projectName) {
                 }
             }
             localStorage.setItem("cacheData", JSON.stringify(stocksData));//缓存到本地
-            console.log( JSON.stringify(stocksData));
+            //console.log( JSON.stringify(stocksData));
         };
 
         ws.onclose = function (e) {
-            console.log("Connection closed", e);
+            //console.log("Connection closed", e);
             isClose = true;
         };
 
@@ -183,7 +192,7 @@ function addConf(project){
                        // console.log(obj.objects[p].tagId,obj.objects[p].tagValue,keyValue);
                     }
                 }
-                console.log(keyValue,keyValue[0],keyValue[0].key,keyValue[0].value);
+                //console.log(keyValue,keyValue[0],keyValue[0].key,keyValue[0].value);
                 //KV=keyValue;
 
                 //设置循环执行页面刷新

@@ -80,7 +80,7 @@ wss.on('connection', function (ws) {
              //console.log(stocksObj);
             if (stocksObj.length !== 0) {
                 ws.send(JSON.stringify(stocksObj));//返回{key:value}键值对字符串
-                console.log("更新", JSON.stringify(stocksObj));
+                //console.log("更新", JSON.stringify(stocksObj));
             }
         }
     };
@@ -89,7 +89,7 @@ wss.on('connection', function (ws) {
     }, 1000);//传回服务端时间间隔
     ws.on('message', function (message) {
         var stockRequest = JSON.parse(message);
-        console.log("收到消息", stockRequest);
+        //console.log("收到消息", stockRequest);
         var type = stockRequest['type'];
         var tagId = stockRequest['tagId'];
         var beginTime = stockRequest['beginTime'];
@@ -101,7 +101,7 @@ wss.on('connection', function (ws) {
             return;
         }
         clientStocks = stockRequest['stocks'];
-        console.log(clientStocks, clientStocks.length);
+        //console.log(clientStocks, clientStocks.length);
         sendStockUpdates(ws, null);
     });
     ws.on('close', function () {

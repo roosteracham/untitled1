@@ -13,6 +13,7 @@
 .canvas-container {
     display: inline-block;
     vertical-align: top;
+    width: 825px;
 }
 #c{
     border:1px solid #888
